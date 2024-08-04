@@ -1,0 +1,196 @@
+-- Load PabloLib
+local a = loadstring(game:HttpGet("https://raw.githubusercontent.com/BatuKvi123/PabloLibV3/main/PabloLibV3"))()
+
+-- Ensure PabloLib is loaded before proceeding
+if a then
+    local b = a:Create(
+        "Cat Piece", -- Game name
+        "Enabled", -- Draggable GUI
+        "p" -- Keybind to open/close the GUI
+    )
+
+    --- Tabs ---
+    local c = b:CreateTab("INF STATS")
+    local d = b:CreateTab("Items")
+    local e = b:CreateTab("have negative points") -- New tab for negative points
+    local f = b:CreateTab("INF STATS NEW VERSION") -- New tab for INF STATS NEW VERSION
+
+    --- Button to load Infinite Yield script ---
+    c:CreateButton("Infinite Yield", function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    end)
+
+    --- Button to load Hyrofr hub script ---
+    c:CreateButton("Hyrofr Hub auto get fruit", function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/HyaFranch/projs/hyrofr/hub'))()
+    end)
+
+    --- Buttons ---
+    c:CreateButton("INF stats cat piece working on first sea 5 time click for give stats and 1 click for max stats", function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Omgshit/Scripts/main/MainLoader.lua"))()
+    end)
+
+    c:CreateTextbox("Change your Speed", function(e)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = e
+        print("Speed changed to:", e)
+    end)
+
+    c:CreateTextbox("Change your Jumppower", function(f)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = f
+        print("Jump power changed to:", f)
+    end)
+
+    --- Toggle for Infinite Health ---
+    local g = false
+    local h
+    local characterAddedConnection
+
+    local function i()
+        local j = game.Players.LocalPlayer
+        local k = j.Character
+        if k then
+            local l = k:FindFirstChildOfClass("Humanoid")
+            if l then
+                l.Health = math.huge
+                l.MaxHealth = math.huge
+
+                -- Ensure health stays infinite
+                if h then
+                    h:Disconnect()
+                end
+
+                h = l:GetPropertyChangedSignal("Health"):Connect(function()
+                    if g then
+                        l.Health = math.huge
+                    end
+                end)
+
+                l:GetPropertyChangedSignal("MaxHealth"):Connect(function()
+                    if g then
+                        l.MaxHealth = math.huge
+                    end
+                end)
+            end
+        end
+    end
+
+    c:CreateToggle("Infinite Health", function(m)
+        g = m
+
+        if g then
+            -- Apply infinite health immediately
+            i()
+
+            -- Connect to CharacterAdded to reapply when character respawns
+            if characterAddedConnection then
+                characterAddedConnection:Disconnect()
+            end
+            characterAddedConnection = game.Players.LocalPlayer.CharacterAdded:Connect(i)
+        else
+            if h then
+                h:Disconnect()
+                h = nil
+            end
+            if characterAddedConnection then
+                characterAddedConnection:Disconnect()
+                characterAddedConnection = nil
+            end
+
+            -- Reset health to normal if the toggle is disabled
+            local j = game.Players.LocalPlayer
+            local k = j.Character
+            if k then
+                local l = k:FindFirstChildOfClass("Humanoid")
+                if l then
+                    l.Health = l.MaxHealth
+                end
+            end
+        end
+    end)
+
+    --- Button to get all swords ---
+    d:CreateButton("Get All Swords", function()
+        local swords = {
+            "1yearsword", "Saber", "BlueScythe", "SaberV2", "MoltSword", "TripleYoru",
+            "BattleAxe", "StrongSpear", "ColdSword", "EggSword", "BattleHammer",
+            "RedScythe", "Katana", "DualKatana", "TripleKatana", "Kiribachi",
+            "TimeSword", "FlameSword", "CatClaw", "Blaster777", "FrozenKatana",
+            "RedKatana", "BlueKatana", "GreenKatana", "Bisento", "AceCutlass",
+            "Hassaikai", "Napoleon", "Yoru", "YoruV2", "Guitar", "Crocohok",
+            "StickyStuff", "GravitySword", "CandyCane", "KamishDagger", "MoltenSword",
+            "GojoSword"
+        }
+
+        for _, sword in ipairs(swords) do
+            local args = {
+                [1] = "Buy",
+                [2] = sword,
+                [3] = 1000
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("BonusFolderFX"):WaitForChild("BoughASword"):FireServer(unpack(args))
+        end
+    end)
+
+    --- Button to get all accessories ---
+    d:CreateButton("Get All Accessories", function()
+        local accessories = {
+            "Cat", "StrawHat", "KiddCape", "LucyHelmet", "KizaruCape", "PirateKingCape",
+            "KaidoCape", "BigMomHat", "MihawkHat", "PinkCatHat", "BlackCatHat",
+            "BlueCatHat", "DaValkyrieHelm", "SerpentValk", "SantaHat", "BraveHat",
+            "Top10Hat", "The2023Cape", "Eggwings", "Specialchristmashat", "Megachristmashat",
+            "Snowmantophatred", "Snowmantophatgreen", "STRONGSHIELD", "WarpHat"
+        }
+
+        for _, accessory in ipairs(accessories) do
+            local args = {
+                [1] = "Buy",
+                [2] = "Diamond",
+                [3] = accessory,
+                [4] = 3000
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("BonusFolderFX"):WaitForChild("BoughAAccessory"):FireServer(unpack(args))
+        end
+    end)
+
+    --- Button to apply negative points ---
+    e:CreateButton("Choose Stat to Apply Negative Points", function()
+        local args = {
+            [1] = -10000000000000000000
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("BonusFolderFX"):WaitForChild("testingstats"):FireServer(unpack(args))
+    end)
+
+    --- New tab for INF STATS NEW VERSION ---
+    f:CreateButton("Choose Stat to Apply Negative Points", function()
+        local args = {
+            [1] = -9000000000000000000
+        }
+
+        game:GetService("ReplicatedStorage"):WaitForChild("BonusFolderFX"):WaitForChild("testingstats"):FireServer(unpack(args))
+    end)
+
+    --- New button and textbox for setting points ---
+    local points = 0
+
+    f:CreateTextbox("Enter Points", function(value)
+        points = tonumber(value)
+        print("Points entered:", points)
+    end)
+
+    f:CreateButton("Set Points", function()
+        if points and points > 0 then
+            local args = {
+                [1] = points
+            }
+
+            game:GetService("ReplicatedStorage"):WaitForChild("BonusFolderFX"):WaitForChild("testingstats"):FireServer(unpack(args))
+            print("Points set to:", points)
+        else
+            warn("Invalid points value")
+        end
+    end)
+
+else
+    warn("Failed to load PabloLib.")
+end
